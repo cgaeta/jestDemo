@@ -1,6 +1,7 @@
 const gulp = require('gulp');
 const git = require('gulp-git');
 const jest = require('./trial');
+const bump = require('gulp-bump');
 
 let testStatus = undefined;
 let files = undefined;
@@ -10,6 +11,7 @@ gulp.task('default', ['jest'], function() {
 
   if (testStatus) {
     stream
+      .pipe(bump({ type: process.env.bump || "patch" }))
       .pipe(git.add())
       .pipe(git.commit(`[prerelease] - V: ${process.env.npm_package_version}`));
   }
