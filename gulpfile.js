@@ -6,14 +6,26 @@ const bump = require('gulp-bump');
 let testStatus = undefined;
 let files = undefined;
 
-gulp.task('default', ['jest'], function() {
+gulp.task('default', ['bump-version'], function() {
   let stream = gulp.src('.');
 
   if (testStatus) {
     stream
-      .pipe(bump({ type: process.env.bump || "patch" }))
+      // .pipe(bump({ type: process.env.bump || "patch" }))
       .pipe(git.add())
       .pipe(git.commit(`[prerelease] - V: ${process.env.npm_package_version}`));
+  }
+
+  return stream;
+});
+
+gulp.task('bump-version', ['jest'], () => {
+  let stream = gulp.src('./package.json');
+
+  if (testStatus) {
+    stream
+      .pipe(bump({ type: process.env.bump || "patch" }))
+      .pipe(gulp.dest('./'));
   }
 
   return stream;
