@@ -11,7 +11,6 @@ gulp.task('default', ['bump-version'], function() {
 
   if (testStatus) {
     stream
-      // .pipe(bump({ type: process.env.bump || "patch" }))
       .pipe(git.add())
       .pipe(git.commit(`[prerelease] - V: ${process.env.npm_package_version}`));
   }
