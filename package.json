@@ -1,0 +1,26 @@
+{
+  "name": "jestdemo",
+  "version": "1.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest --notify --coverage"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-jest": "^22.4.3",
+    "babel-preset-env": "^1.7.0",
+    "gulp": "^3.9.1",
+    "gulp-git": "^2.6.0",
+    "jest": "^22.4.3",
+    "regenerator-runtime": "^0.11.1"
+  },
+  "jest": {
+    "moduleNameMapper": {
+      "\\.(jpe?g|png|gif|ewbp|svg|mp4|wav|mp3)$": "<rootDir>/fileMock.js",
+      "\\.(css|less)$": "<rootDir>/styleMock.js"
+    }
+  }
+}
