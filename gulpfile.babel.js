@@ -89,7 +89,7 @@ const bumpVersion = () => {
   return stream;
 };
 
-const checkin = gulp.series(commit, gulp.parallel(unit, intg));
+const checkin = gulp.series(commit, unit, intg);
 const checkinDev = gulp.parallel(checkin, build);
 const checkinStaging = gulp.series(checkinDev, e2e, mergeStaging);
 // const staging = gulp.series()
