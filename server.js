@@ -1,20 +1,35 @@
-const express = require('express');
-const webpack = require('webpack');
-const webpackDevMiddleware = require('webpack-dev-middleware');
+const http = require("http");
+const pr = require("./promisify").pr;
 
-const app = express();
-const config = require('./webpack.config.js');
-const compiler = webpack(config);
-
-const hook = compiler.hooks.beforeCompile;
-console.log(hook, hook.tap, hook.tapAsync, hook.tapPromise);
-
-hook.tap("Before compile", () => console.log(arguments));
-
-compiler.run((err, stats) => {
-  if (err || stats.hasErrors()) {
-    console.error(err);
+const server = () => http.createServer((req, res) => {
+  if (!req.url.includes("favicon")) {
+    res.writeHead(200, {"Content-Type": "text/html"});
+    pr.readdir("./dist")
+    .then(data => {
+      let files = data.filter(f =>
+        !req.url.includes("?") ? f.includes(req.url.substring(1)) :
+          f.includes(req.url.substring(1, req.url.indexOf("?"))));
+      return pr.readFile("./dist/" + files[0])
+    })
+    .then(data => {
+      res.write(data);
+      res.end();
+    }).catch ((err) => {
+      console.log(err);
+      res.write("<h2>404 - Couldn't find that page</h2>");
+      res.end();
+    });
   } else {
-    console.log(stats);
+    res.end();
   }
 });
+
+const start = () => server.listen(8080, () => console.log("listening on port 8080"));
+
+const stop = () => server.close(() => console.log("server is closed"));
+
+module.exports = {
+  server,
+  start,
+  stop
+};

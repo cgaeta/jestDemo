@@ -1,10 +1,15 @@
 const jest = require('jest/node_modules/jest-cli/build/cli');
 
-function runJest (test) {
+function runJest (test, coverageDirectory) {
   let thing = jest.runCLI({
     notify: true,
     version: false,
     coverage: true,
+    coverageDirectory,
+    showConfig: false,
+    globalSetup: "<rootDir>/setup.js",
+    globalTeardown: "<rootDir>/teardown.js",
+    testEnvironment: "./puppeteer_environment.js",
     testMatch: test !== undefined ? [test] : ['**/__tests__/**/*.js?(x)', '**/?(*.)(spec|test).js?(x)']
     // testRegex: [test || null]
   }, ["./"]);
@@ -13,3 +18,5 @@ function runJest (test) {
 }
 
 module.exports = runJest;
+
+// runJest();

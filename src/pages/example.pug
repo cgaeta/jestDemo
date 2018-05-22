@@ -3,4 +3,13 @@ html
     title Example
   body
     h1 Hello world!
+    form
+      label(for="firstName") First Name:
+      input#firstName(
+        type="text"
+        placeholder="Steve"
+        required pattern="[a-zA-Z]{1,}"
+        title="First name should only contain letters, and maybe a space."
+      )
+      button#submitBtn Submit
     script(src=jsHash+'.js')
