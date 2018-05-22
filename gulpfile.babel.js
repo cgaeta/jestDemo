@@ -8,7 +8,8 @@ import { getChangedFilesForRoots } from 'jest-changed-files';
 import { promisify } from './promisify.js';
 
 git.pr = {
-  checkout: promisify(git.checkout)
+  checkout: promisify(git.checkout),
+  merge: promisify(git.merge)
 }
 
 const { bumpV, branch, npm_package_version: npmv } = process.env;
@@ -34,7 +35,8 @@ const commit = () => {
 
 const mergeStaging = () => {
   return git.pr.checkout('staging')
-    .then(() => git.merge('development'))
+    .then(() => git.pr.merge('development'))
+    .then(() => git.pr.checkout('dev'));
 }
 
 const checkBranch = () => {
