@@ -25,6 +25,8 @@ const jestFactory = (test, dir) => () => {
 
 export const unit = jestFactory('**/?(*.)unit.test.js?(x)', './coverage/unit/');
 export const intg = jestFactory('**/?(*.)intg.test.js?(x)', './coverage/intg/');
+export const unit_intg = jestFactory('**/?(*.)(unit|intg).test.js?(x)',
+  './coverage/intg/');
 export const e2e = jestFactory('**/?(*.)acpt.test.js?(x)', './coverage/e2e/');
 
 gulp.task('Unit test', unit);

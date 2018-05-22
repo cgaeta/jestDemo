@@ -1,17 +1,11 @@
 import gulp from 'gulp';
 import git from 'gulp-git';
-import { files, testStatus, unit, intg, e2e } from './gulp.jest.babel.js';
+import { files, testStatus,
+  unit, intg, unit_intg, e2e } from './gulp.jest.babel.js';
 import bump from 'gulp-bump';
 import { webpackHash,
   webpackTask, pugTask, build } from './gulp.build.babel.js';
-// import { getChangedFilesForRoots } from 'jest-changed-files';
-// import { promisify } from './promisify.js';
 import { numChangedFiles, commit, mergeStaging } from './gulp.git.babel.js';
-
-// git.pr = {
-//   checkout: promisify(git.checkout),
-//   merge: promisify(git.merge)
-// }
 
 const { bumpV, branch, npm_package_version: npmv } = process.env;
 
@@ -25,10 +19,9 @@ const watch = () => {
   });
 };
 
-const checkin = gulp.series(commit, unit, intg);
+const checkin = gulp.series(commit, unit_intg);
 const checkinDev = gulp.parallel(checkin, build);
 const checkinStaging = gulp.series(checkinDev, e2e, mergeStaging);
-// const staging = gulp.series()
 
 export {
   unit,
