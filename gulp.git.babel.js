@@ -16,7 +16,7 @@ export let numChangedFiles = 0;
 export const commit = () => {
   return gulp.src('.')
     .pipe(git.add())
-    .pipe(git.commit(() => `V = ${npmv}`));
+    .pipe(git.commit('placeholder message'));
 };
 
 export const mergeStaging = () => {
@@ -24,27 +24,6 @@ export const mergeStaging = () => {
     .then(() => git.pr.merge('dev'))
     .then(() => git.pr.checkout('dev'));
 }
-
-const checkBranch = () => {
-    git.revParse({
-      args: '--abbrev-ref HEAD'
-    }, function (err, branch) {
-      console.log('currently: ', branch);
-    });
-};
-
-const checkoutBranch = () => {
-  git.revParse({
-    args: '--abbrev-ref HEAD'
-  }, function (err, branch) {
-    if (err) { throw err };
-    if (branch !== undefined && branch !== branch) {
-      git.checkout(branch, function (err) {
-        if (err) { throw err; }
-      })
-    }
-  })
-};
 
 const diff = () => {
   return getChangedFilesForRoots(['./'])
