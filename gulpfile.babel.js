@@ -35,7 +35,7 @@ const commit = () => {
 
 const mergeStaging = () => {
   return git.pr.checkout('staging')
-    .then(() => git.pr.merge('development'))
+    .then(() => git.pr.merge('dev'))
     .then(() => git.pr.checkout('dev'));
 }
 
