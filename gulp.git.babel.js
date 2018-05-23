@@ -16,13 +16,15 @@ export let numChangedFiles = 0;
 export const commit = () => {
   return gulp.src('.')
     .pipe(git.add())
-    .pipe(git.commit(commitMessage(process.argv)));
+    .pipe(git.commit(commitMessage(process.argv)))
+    .pipe(bump({type: 'prerelease'}));
 };
 
 export const mergeStaging = () => {
-  return git.pr.checkout('staging')
-    .then(() => git.pr.merge('dev'))
-    .then(() => git.pr.checkout('dev'));
+  return gulp.pipe(git.pr.checkout('staging'))
+    .pipe(git.pr.merge('dev'))
+    .pipe(bump({type: commitSemVer(process.argv)}))
+    .pipe(git.pr.checkout('dev'));
 }
 
 const diff = () => {
@@ -46,12 +48,10 @@ const bumpVersion = () => {
   return stream;
 };
 
-const commitMessage = args => {
-  let msg;
-  args.forEach((str, idx) => {
-    if (str === "--m") { msg = args[idx+1]; }
-    return;
-  });
+export const commitMessage = (args, i) =>
+  (i = args.findIndex(el => el === "--m")) >  -1 ?
+    args[i+1] : "placeholder";
 
-  return msg || "placeholder";
-}
+export const commitSemVer = (args, t) =>
+  (t = args.findIndex(el => el === "--bump")) > -1 ?
+    args[t+1] : "bump";
