@@ -16,7 +16,7 @@ export let numChangedFiles = 0;
 export const commit = () => {
   return gulp.src('.')
     .pipe(git.add())
-    .pipe(git.commit('placeholder message'));
+    .pipe(git.commit(commitMessage(process.argv)));
 };
 
 export const mergeStaging = () => {
@@ -45,3 +45,13 @@ const bumpVersion = () => {
 
   return stream;
 };
+
+const commitMessage = args => {
+  let msg;
+  args.forEach((str, idx) => {
+    if (str === "--m") { msg = args[idx+1]; }
+    return;
+  });
+
+  return msg || "placeholder";
+}
