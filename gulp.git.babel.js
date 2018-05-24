@@ -13,10 +13,27 @@ git.pr = {
 
 export let numChangedFiles = 0;
 
+export const commitMessage = (args, i) =>
+(i = args.findIndex(el => el === "--m")) >  -1 ?
+args[i+1] : "placeholder";
+
+export const commitSemVer = (args, t) =>
+(t = args.findIndex(el => el === "--bump")) > -1 ?
+args[t+1] : "bump";
+
+const bumpFactory = type => () =>
+  gulp.src('./package.json')
+    .pipe(bump({ type }))
+    .pipe(gulp.dest('./'));
+
+export const bumpDev = bumpFactory('prerelease');
+export const bumpStaging = bumpFactory(commitSemVer(process.argv));
+
 export const commit = () => {
   return gulp.src('.')
     .pipe(git.add())
-    .pipe(git.commit(commitMessage(process.argv)));
+    .pipe(git.commit(commitMessage(process.argv)))
+    .pipe(bump({type: 'prerelease'}));
 };
 
 export const mergeStaging = () => {
@@ -45,13 +62,3 @@ const bumpVersion = () => {
 
   return stream;
 };
-
-const commitMessage = args => {
-  let msg;
-  args.forEach((str, idx) => {
-    if (str === "--m") { msg = args[idx+1]; }
-    return;
-  });
-
-  return msg || "placeholder";
-}
