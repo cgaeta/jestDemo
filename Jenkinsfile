@@ -15,4 +15,12 @@ pipeline {
       }
     }
   }
+  post {
+    always {
+      sh 'echo "Maybe posting. I don\' know"'
+    }
+    failure {
+      sh 'echo "Nope. Didn\'t work"'
+    }
+  }
 }
