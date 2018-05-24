@@ -5,11 +5,13 @@ pipeline {
     stage('Build') {
       steps {
         sh '"echo Building.."'
+        sh 'npm i'
       }
     }
     stage('Test') {
       steps {
         sh 'echo "Testing.."'
+        sh 'npm test'
       }
     }
   }
