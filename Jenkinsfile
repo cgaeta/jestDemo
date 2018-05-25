@@ -1,5 +1,5 @@
 pipeline {
-  agent { docker { 'node:carbon' } }
+  agent { dockerfile true }
   stages {
     stage('Build') {
       steps {
