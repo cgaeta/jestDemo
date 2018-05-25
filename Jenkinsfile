@@ -5,7 +5,7 @@ pipeline {
       steps {
         sh 'echo "Building.."'
         sh 'whoami'
-        sh 'su pptrusr'
+        sh 'su pptruser'
         sh 'whoami'
         sh 'npm install'
       }
