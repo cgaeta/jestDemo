@@ -8,6 +8,7 @@ const DIR = path.join(os.tmpdir(), 'jest_puppeteer_global_setup')
 
 module.exports = async function() {
   const browser = await puppeteer.launch({
+    args: ["--no-sandbox"]
     // headless: false,
     // slowMo: 1000
   })
