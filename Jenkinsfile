@@ -13,7 +13,7 @@ pipeline {
     stage('Test') {
       steps {
         sh 'echo "Testing.."'
-        sh 'npm test -- "\\w+\\.(unit|intg)\\.test\\.js"'
+        sh 'sudo -u pptruser npm test -- "\\w+\\.(unit|intg)\\.test\\.js"'
       }
     }
   }
