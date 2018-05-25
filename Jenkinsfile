@@ -5,7 +5,7 @@ pipeline {
       steps {
         sh 'echo "Building.."'
         sh 'whoami'
-        sh 'su pptruser'
+        sh 'su - pptruser'
         sh 'whoami'
         sh 'npm install'
       }
@@ -13,7 +13,7 @@ pipeline {
     stage('Test') {
       steps {
         sh 'echo "Testing.."'
-        sh 'su -c (npm test -- "\\w+\\.(unit|intg)\\.test\\.js") pptruser'
+        //sh 'npm test -- "\\w+\\.(unit|intg)\\.test\\.js"'
       }
     }
   }
