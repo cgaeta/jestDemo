@@ -29,17 +29,17 @@ WORKDIR /usr/src/app
 
 # Install puppeteer so it's available in the container.
 RUN npm i puppeteer
+COPY package*.json ./
+RUN npm install
+COPY . .
+EXPOSE 8080
 
 # Add user so we don't need --no-sandbox.
 RUN groupadd -r pptruser && useradd -r -g pptruser -G audio,video pptruser \
     && mkdir -p /home/pptruser/Downloads \
     && chown -R pptruser:pptruser /home/pptruser \
-    && chown -R pptruser:pptruser /node_modules
+    && chown -R pptruser:pptruser /user/src/app/node_modules
 
-COPY package*.json ./
-RUN npm install
-COPY . .
-EXPOSE 8080
 CMD ["Docker", "version"]
 
 # Run everything after as non-privileged user.
