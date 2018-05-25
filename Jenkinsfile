@@ -18,7 +18,8 @@ pipeline {
         sh 'ls -l runTest.sh'
         sh 'chmod -R 755 /usr/src/app'
         sh 'ls -l runTest.sh'
-        sh 'su -c ./runTest.sh pptruser'
+        sh 'bash ./runTest.sh'
+        //sh 'su -c ./runTest.sh pptruser'
         //sh 'npm test -- "\\w+\\.(unit|intg)\\.test\\.js"'
       }
     }
