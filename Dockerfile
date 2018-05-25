@@ -40,8 +40,6 @@ RUN groupadd -r pptruser && useradd -r -g pptruser -G audio,video pptruser \
     && chown -R pptruser:pptruser /home/pptruser \
     && chown -R pptruser:pptruser /usr/src/app/node_modules \
     && chown -R pptruser:pptruser /usr/src/app/runTest.sh
-RUN ls -l runTest.sh
-RUN chmod 755 /usr/src/app/runTest.sh
 
 CMD ["Docker", "version"]
 
