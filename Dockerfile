@@ -34,20 +34,15 @@ RUN groupadd -r pptruser && useradd -r -g pptruser -G audio,video pptruser \
     && chown -R pptruser:pptruser /home/pptruser \
     && chown -R pptruser:pptruser /node_modules
 
+WORKDIR /usr/src/app
+COPY package*.json ./
+RUN npm install
+COPY . .
+EXPOSE 8080
+CMD ["Docker", "version"]
+
 # Run everything after as non-privileged user.
 USER pptruser
 
 ENTRYPOINT ["dumb-init", "--"]
 CMD ["google-chrome-unstable"]
-
-WORKDIR /usr/src/app
-
-COPY package*.json ./
-
-RUN npm install
-
-COPY . .
-
-EXPOSE 8080
-
-CMD ["Docker", "version"]
