@@ -25,6 +25,8 @@ RUN chmod +x /usr/local/bin/dumb-init
 #     browser.launch({executablePath: 'google-chrome-unstable'})
 # ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD true
 
+WORKDIR /usr/src/app
+
 # Install puppeteer so it's available in the container.
 RUN npm i puppeteer
 
@@ -34,7 +36,6 @@ RUN groupadd -r pptruser && useradd -r -g pptruser -G audio,video pptruser \
     && chown -R pptruser:pptruser /home/pptruser \
     && chown -R pptruser:pptruser /node_modules
 
-WORKDIR /usr/src/app
 COPY package*.json ./
 RUN npm install
 COPY . .
