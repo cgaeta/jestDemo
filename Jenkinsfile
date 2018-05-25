@@ -1,5 +1,5 @@
 pipeline {
-  agent { docker { image 'node:carbon' }
+  agent { docker { image 'node:carbon' } }
   stages {
     stage('Build') {
       steps {
