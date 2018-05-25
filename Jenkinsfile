@@ -10,7 +10,7 @@ pipeline {
     stage('Test') {
       steps {
         sh 'echo "Testing.."'
-        sh 'npm test'
+        sh 'npm test -- *.unit.test.js'
       }
     }
   }
