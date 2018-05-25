@@ -4,6 +4,7 @@ pipeline {
     stage('Build') {
       steps {
         sh 'echo "Building.."'
+        sh 'whoami'
         sh 'npm install'
       }
     }
