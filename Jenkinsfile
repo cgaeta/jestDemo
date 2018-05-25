@@ -20,7 +20,7 @@ pipeline {
         sh 'ls -l runTest.sh'
         sh 'bash ./runTest.sh'*/
         //sh 'su -c ./runTest.sh pptruser'
-        sh 'npm test -- "\\w+\\.(unit|intg)\\.test\\.js"'
+        sh 'npm test -- "\\w+\\.(unit|intg)\\.test\\.js" --config{}'
       }
     }
   }
