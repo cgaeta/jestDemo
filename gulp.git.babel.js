@@ -4,6 +4,7 @@ import bump from 'gulp-bump';
 import { getChangedFilesForRoots } from 'jest-changed-files';
 import { promisify } from './promisify.js';
 import { gitCz } from 'commitizen/dist/cli/strategies';
+import { configLoader } from 'commitizen';
 
 const { bumpV, branch, npm_package_version: npmv } = process.env;
 
@@ -30,26 +31,14 @@ const bumpFactory = type => () =>
 export const bumpDev = bumpFactory('prerelease');
 export const bumpStaging = bumpFactory(commitSemVer(process.argv));
 
-// export const commit = async () => {
-//   await gulp.src('.')
-//     .pipe(git.add());
-//   await gitCz([], {
-//     cliPath: __dirname
-//   }, {
-//     path: 'node_modules/cz-conventional-changelog'
-//   });
-// };
-
 export const add = () => {
   return gulp.src('.')
     .pipe(git.add());
 }
 
-export const commit = gulp.series(add, () => gitCz([], {
+export const commit = gulp.series(add, async () => await gitCz([], {
   cliPath: __dirname,
-}, {
-  path: 'node_modules/cz-conventional-changelog'
-}));
+}, configLoader.load()));
 
 export const mergeStaging = () => {
   return git.pr.checkout('staging')
