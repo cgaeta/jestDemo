@@ -3,6 +3,7 @@ import git from 'gulp-git';
 import bump from 'gulp-bump';
 import { getChangedFilesForRoots } from 'jest-changed-files';
 import { promisify } from './promisify.js';
+import { gitCz } from 'commitizen/dist/cli/strategies';
 
 const { bumpV, branch, npm_package_version: npmv } = process.env;
 
@@ -29,12 +30,26 @@ const bumpFactory = type => () =>
 export const bumpDev = bumpFactory('prerelease');
 export const bumpStaging = bumpFactory(commitSemVer(process.argv));
 
-export const commit = () => {
+// export const commit = async () => {
+//   await gulp.src('.')
+//     .pipe(git.add());
+//   await gitCz([], {
+//     cliPath: __dirname
+//   }, {
+//     path: 'node_modules/cz-conventional-changelog'
+//   });
+// };
+
+export const add = () => {
   return gulp.src('.')
-    .pipe(git.add())
-    .pipe(git.commit(commitMessage(process.argv)))
-    .pipe(bump({type: 'prerelease'}));
-};
+    .pipe(git.add());
+}
+
+export const commit = gulp.series(add, () => gitCz([], {
+  cliPath: __dirname,
+}, {
+  path: 'node_modules/cz-conventional-changelog'
+}));
 
 export const mergeStaging = () => {
   return git.pr.checkout('staging')

@@ -36,5 +36,6 @@ export {
   pugTask,
   checkin,
   build,
-  checkinStaging as default
+  checkinStaging as default,
+  commit
 }
