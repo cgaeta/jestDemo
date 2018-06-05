@@ -6,6 +6,11 @@ function runJest (test, coverageDirectory) {
     version: false,
     coverage: true,
     coverageDirectory,
+    // collectCoverageFrom: [
+    //   "!**/node_modules/**",
+    //   "!**/vendor/**"
+    // ],
+    coverageReporters: ["json", "json-summary", "text", "lcov"],
     showConfig: false,
     globalSetup: "<rootDir>/setup.js",
     globalTeardown: "<rootDir>/teardown.js",

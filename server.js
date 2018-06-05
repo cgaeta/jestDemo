@@ -24,7 +24,7 @@ const server = () => http.createServer((req, res) => {
   }
 });
 
-const start = () => server.listen(8080, () => console.log("listening on port 8080"));
+const start = () => server.listen(0, () => console.log("listening on port 8080"));
 
 const stop = () => server.close(() => console.log("server is closed"));
 
