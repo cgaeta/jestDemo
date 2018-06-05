@@ -7,11 +7,9 @@ import { webpackHash,
 import {
   commit,
   mergeStaging,
-  commitMessage,
-  commitSemVer
 } from './gulp.git.babel.js';
 
-const { bumpV, branch, npm_package_version: npmv } = process.env;
+const { branch } = process.env;
 
 const watch = () => {
   let watcher = gulp.watch(['src/scripts/*.js', '!src/scripts/*.*.test.js']);
