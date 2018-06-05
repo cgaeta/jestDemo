@@ -6,16 +6,20 @@ function runJest (test, coverageDirectory) {
     version: false,
     coverage: true,
     coverageDirectory,
-    // collectCoverageFrom: [
-    //   "!**/node_modules/**",
-    //   "!**/vendor/**"
-    // ],
+    collectCoverageFrom: [
+      "!**/node_modules/**",
+      "**/src/scripts/**",
+      "!**/src/scripts/tests/**"
+    ],
     coverageReporters: ["json", "json-summary", "text", "lcov"],
     showConfig: false,
     globalSetup: "<rootDir>/setup.js",
     globalTeardown: "<rootDir>/teardown.js",
     testEnvironment: "./puppeteer_environment.js",
-    testMatch: test !== undefined ? [test] : ['**/__tests__/**/*.js?(x)', '**/?(*.)(spec|test).js?(x)']
+    testMatch: test !== undefined ? [test] : [
+      '**/__tests__/**/*.js?(x)',
+      '**/?(*.)(spec|test).js?(x)'
+    ]
     // testRegex: [test || null]
   }, ["./"]);
 
