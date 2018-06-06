@@ -4,9 +4,12 @@ import { files, testStatus,
   unit, intg, unit_intg, e2e } from './gulp.jest.babel.js';
 import { webpackHash,
   webpackTask, pugTask, build } from './gulp.build.babel.js';
-import { numChangedFiles, commit, mergeStaging, commitMessage, commitSemVer } from './gulp.git.babel.js';
+import {
+  commit,
+  mergeStaging,
+} from './gulp.git.babel.js';
 
-const { bumpV, branch, npm_package_version: npmv } = process.env;
+const { branch } = process.env;
 
 const watch = () => {
   let watcher = gulp.watch(['src/scripts/*.js', '!src/scripts/*.*.test.js']);
@@ -22,8 +25,6 @@ const checkin = gulp.series(commit, unit_intg);
 const checkinDev = gulp.parallel(checkin, build);
 const checkinStaging = gulp.series(checkinDev, e2e, mergeStaging);
 
-export const testFn = () => console.log(commitMessage(process.argv), commitSemVer(process.argv));
-
 export {
   unit,
   intg,
@@ -33,5 +34,6 @@ export {
   pugTask,
   checkin,
   build,
-  checkinStaging as default
+  checkinStaging as default,
+  commit
 }

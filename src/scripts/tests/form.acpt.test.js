@@ -3,10 +3,13 @@ import path from "path";
 const timeout = 5000;
 
 describe('form test', () => {
-  let page;
+  let page, port;
 
-  beforeAll(() => new Promise((resolve, reject) =>
-    global.__SERVER__.listen(8080, resolve)));
+  beforeAll(async () => {
+    return await global.__SERVER__.listen(0, () => {
+      port = global.__SERVER__.address().port;
+    })
+  });
   afterAll(async () => {
     global.__SERVER__.close();
     let pages = await browser.pages();
@@ -17,10 +20,7 @@ describe('form test', () => {
   beforeEach(async () => {
     page = await global.__BROWSER__.newPage();
 
-    // let url = path.resolve(process.cwd(), "dist/example.html");
-    // await page.goto("file://" + url);
-
-    let url = "http://localhost:8080/example";
+    let url = `http://localhost:${port}/example`;
     await page.goto(url);
 
   }, timeout);
