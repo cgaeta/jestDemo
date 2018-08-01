@@ -6,4 +6,11 @@
 
 # Jest Demo
 
-Testing Jest and other technologies
+Started as a Jest experiment, but turned into an attempt to build a continuous integration tool.
+
+Packages / libraries include:
+* Jest for unit / integration testing
+* Puppeteer for acceptance testing
+* Pug (formerly Jade) for templating
+* Webpack and Gulp for builds
+* Gulp for Git
