@@ -14,3 +14,4 @@ Packages / libraries include:
 * Pug (formerly Jade) for templating
 * Webpack and Gulp for builds
 * Gulp for Git
+* Babel for ES6+ features, especially async functions
